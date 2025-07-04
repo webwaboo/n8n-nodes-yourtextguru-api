@@ -4,9 +4,9 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class NasaPicsApi implements ICredentialType {
-	name = 'MyTemplateApi';
-	displayName = 'My Template API';
+export class YourtextGuruApi implements ICredentialType {
+	name = 'YourtextGuruApi';
+	displayName = 'YourtextGuru Api';
 	// Uses the link to this tutorial as an example
 	// Replace with your own docs links when building your own nodes
 	documentationUrl = 'https://docs.n8n.io/integrations/creating-nodes/build/declarative-style-node/';

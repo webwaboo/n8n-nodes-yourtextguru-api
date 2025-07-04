@@ -1,6 +1,6 @@
 import { INodeType, INodeTypeDescription } from 'n8n-workflow';
 
-export class MyTemplate implements INodeType {
+export class YourtextGuru implements INodeType {
 	description: INodeTypeDescription = { // Basic node details will go here
 		//name displayed under the node
 		displayName: 'Yourtext.Guru',
@@ -100,7 +100,7 @@ export class MyTemplate implements INodeType {
 				},
 			],
 			//default option displayed
-			default: 'Project',
+			default: 'guide',
 		},
 		{
 			displayName: 'Resource',
@@ -112,7 +112,7 @@ export class MyTemplate implements INodeType {
 			options: [
 				{
 					//name displayed in dropdown
-					name: 'SEO txl',
+					name: 'SEO Txl',
 					//name for the system
 					value: 'seotxl',
 				},
@@ -144,7 +144,7 @@ export class MyTemplate implements INodeType {
 				},
 			],
 			//default option displayed
-			default: 'Project',
+			default: 'status',
 		},
 
 		// Operations will go here, 1 operation = 1 endpoint with all params
