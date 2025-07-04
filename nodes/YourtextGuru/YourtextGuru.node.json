@@ -1,0 +1,20 @@
+{
+	"node": "n8n-nodes-base.YourtextGuru",
+	"nodeVersion": "version of the node ex: 1.0",
+	"codexVersion": "version of the codex ex: 1.0",
+	"categories": [
+    "Marketing & Content"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://www.sequance.fr/documentation-api-make-yourtext-guru/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://www.sequance.fr/documentation-api-make-yourtext-guru/"
+			}
+		]
+	}
+}
