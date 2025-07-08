@@ -54,40 +54,6 @@ export class YourtextGuru implements INodeType {
 					name: 'Group',
 					value: 'group',
 				},
-			],
-			//default option displayed
-			default: 'Project',
-		},
-		{
-			displayName: 'Resource',
-			name: 'resource',
-			//type if the type of UI element to display, here we choose for a dropdown
-			type: 'options',
-			noDataExpression: true,
-			// in the dropdown, we put name of the different options/resources
-			options: [
-				{
-					//name displayed in dropdown
-					name: 'Group',
-					//name for the system
-					value: 'group',
-				},
-				{
-					name: 'Group',
-					value: 'group',
-				},
-			],
-			//default option displayed
-			default: 'Project',
-		},
-		{
-			displayName: 'Resource',
-			name: 'resource',
-			//type if the type of UI element to display, here we choose for a dropdown
-			type: 'options',
-			noDataExpression: true,
-			// in the dropdown, we put name of the different options/resources
-			options: [
 				{
 					//name displayed in dropdown
 					name: 'Guide',
@@ -95,57 +61,22 @@ export class YourtextGuru implements INodeType {
 					value: 'guide',
 				},
 				{
-					name: 'Group',
-					value: 'group',
-				},
-			],
-			//default option displayed
-			default: 'guide',
-		},
-		{
-			displayName: 'Resource',
-			name: 'resource',
-			//type if the type of UI element to display, here we choose for a dropdown
-			type: 'options',
-			noDataExpression: true,
-			// in the dropdown, we put name of the different options/resources
-			options: [
-				{
 					//name displayed in dropdown
 					name: 'SEO Txl',
 					//name for the system
 					value: 'seotxl',
 				},
 				{
-					name: 'Group',
-					value: 'group',
-				},
-			],
-			//default option displayed
-			default: 'Project',
-		},
-		{
-			displayName: 'Resource',
-			name: 'resource',
-			//type if the type of UI element to display, here we choose for a dropdown
-			type: 'options',
-			noDataExpression: true,
-			// in the dropdown, we put name of the different options/resources
-			options: [
-				{
 					//name displayed in dropdown
 					name: 'Status',
 					//name for the system
 					value: 'status',
-				},
-				{
-					name: 'Group',
-					value: 'group',
-				},
+				}
 			],
 			//default option displayed
-			default: 'status',
+			default: 'project',
 		},
+
 
 		// Operations will go here, 1 operation = 1 endpoint with all params
 		{
@@ -168,8 +99,22 @@ export class YourtextGuru implements INodeType {
 					//Name of the operation in dropdown = label in Make
 					name: 'Get',
 					value: 'get',
-					action: 'Get organization projects list',
-					description: 'Get the list of projects for an organization',
+					action: 'List All Projects',
+					description: 'List all the organization\'s projects.',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '/projects',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get',
+					value: 'get',
+					action: 'Get Project Information',
+					description: 'Get a project\'s information.',
 					routing: {
 						// set method and url for the endpoint
 						request: {
@@ -181,7 +126,7 @@ export class YourtextGuru implements INodeType {
 			],
 			default: 'get',
 		},
-		{
+		/*{
 			// operation 1 for resource marsRoverPhotos
 			displayName: 'Operation',
 			name: 'operation',
@@ -190,7 +135,7 @@ export class YourtextGuru implements INodeType {
 			displayOptions: {
 				//only show in resource:
 				show: {
-					resource: ['marsRoverPhotos'],
+					resource: ['project'],
 				},
 			},
 			options: [
@@ -209,7 +154,7 @@ export class YourtextGuru implements INodeType {
 				},
 			],
 			default: 'get',
-		},
+		},*/
 		{
 			// name of options 1
 			displayName: 'Rover name',
@@ -233,7 +178,7 @@ export class YourtextGuru implements INodeType {
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['marsRoverPhotos'],
+					resource: ['project'],
 				},
 			},
 		},
@@ -248,7 +193,7 @@ export class YourtextGuru implements INodeType {
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['marsRoverPhotos'],
+					resource: ['project'],
 					operation: ['get'],
 				},
 			},
@@ -271,7 +216,7 @@ export class YourtextGuru implements INodeType {
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['astronomyPictureOfTheDay'],
+					resource: ['guide'],
 					operation: ['get'],
 				},
 			},
