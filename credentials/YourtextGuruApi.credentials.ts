@@ -18,12 +18,12 @@ export class YourtextGuruApi implements ICredentialType {
 			default: '',
 		},
 	];
-	authenticate = {
+	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
-			header: {
-				Authorization: '=Bearer {{$credentials.apiKey}}'
-			}
+			headers: {
+				Authorization: '=Bearer {{$credentials.apiKey}}',
+			},
 		},
-	} as IAuthenticateGeneric;
+	}
 }

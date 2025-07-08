@@ -22,7 +22,7 @@ export class YourtextGuru implements INodeType {
 		//name your credentials "MyNodeNameApi"
 		credentials: [
 			{
-				name: 'MyYourtextGuruApi',
+				name: 'YourtextGuruApi',
 				required: true,
 			},
 		],
@@ -74,7 +74,7 @@ export class YourtextGuru implements INodeType {
 				}
 			],
 			//default option displayed
-			default: 'project',
+			default: 'status',
 		},
 
 
@@ -90,17 +90,17 @@ export class YourtextGuru implements INodeType {
 				show: {
 					// select the resource corresponding to the endpoint
 					resource: [
-						'Project',
+						'project',
 					],
 				},
 			},
 			options: [
 				{
 					//Name of the operation in dropdown = label in Make
-					name: 'Get',
-					value: 'get',
-					action: 'List All Projects',
-					description: 'List all the organization\'s projects.',
+					name: 'Get All Projects',
+					value: 'get all projects',
+					action: 'List all projects',
+					description: 'List all the organization\'s projects',
 					routing: {
 						// set method and url for the endpoint
 						request: {
@@ -111,10 +111,10 @@ export class YourtextGuru implements INodeType {
 				},
 				{
 					//Name of the operation in dropdown = label in Make
-					name: 'Get',
-					value: 'get',
-					action: 'Get Project Information',
-					description: 'Get a project\'s information.',
+					name: 'Get a Project',
+					value: 'get a project',
+					action: 'Get project information',
+					description: 'Get a project\'s information',
 					routing: {
 						// set method and url for the endpoint
 						request: {
@@ -122,9 +122,9 @@ export class YourtextGuru implements INodeType {
 							url: '/projects',
 						},
 					},
-				},
+				}
 			],
-			default: 'get',
+			default: 'get all projects',
 		},
 		/*{
 			// operation 1 for resource marsRoverPhotos
@@ -194,7 +194,7 @@ export class YourtextGuru implements INodeType {
 				show: {
 					//only show if you've selected :
 					resource: ['project'],
-					operation: ['get'],
+					operation: ['get a project'],
 				},
 			},
 			routing: {
