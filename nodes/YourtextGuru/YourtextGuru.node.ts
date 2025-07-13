@@ -184,9 +184,10 @@ export class YourtextGuru implements INodeType {
 					],
 				},
 			},
+			// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 			options: [
+				// Operation : analyzeText
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Analyze Text',
 					value: 'analyzeText',
 					action: 'Analyze text',
@@ -199,8 +200,8 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : check
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Check',
 					value: 'check',
 					action: 'Check guide',
@@ -213,8 +214,8 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : createGuide
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Create',
 					value: 'createGuide',
 					action: 'Create guide',
@@ -227,8 +228,8 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : deleteGuide
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Delete',
 					value: 'deleteGuide',
 					action: 'Delete guide',
@@ -241,22 +242,22 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : getGuide
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get',
 					value: 'getGuide',
 					action: 'Get guide',
-					description: 'Get a specific gide',
+					description: 'Get a specific guide',
 					routing: {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '/guides',
+							url: '=/guides/{{$parameter.guideId}}',
 						},
 					},
 				},
+				// Operation : listGuides
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get Many',
 					value: 'listGuides',
 					action: 'List all guides',
@@ -269,40 +270,181 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : getGuideBriefAnalysis with return all or id
+				{
+					name: 'Get Brief Analysis',
+					value: 'getGuideBriefAnalysis',
+					action: 'Get brief analysis',
+					description: 'Get the last briefs analysis',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/guides/{{$parameter.guideId}}/brief/analyze',
+						},
+					},
+				},
 			],
 			default: 'listGuides',
 		},
 
-
+		// All Operations for <Status>
 		{
-			// name of options 1
-			displayName: 'Rover name',
-			description: 'Choose which Mars Rover to get a photo from',
-			required: true,
-			name: 'roverName',
-			// type of options UX
+			displayName: 'Operation',
+			name: 'operation',
+			// Display the operations in a dropdown
 			type: 'options',
-			options: [
-				{name: 'Curiosity', value: 'curiosity'},
-				{name: 'Opportunity', value: 'opportunity'},
-				{name: 'Perseverance', value: 'perseverance'},
-				{name: 'Spirit', value: 'spirit'},
-			],
-			routing: {
-				request: {
-					url: '=/mars-photos/api/v1/rovers/{{$value}}/photos',
-				},
-			},
-			default: 'curiosity',
+			noDataExpression: true,
 			displayOptions: {
 				show: {
-					//only show if you've selected :
-					resource: ['project'],
+					// select the resource corresponding to the endpoint
+					resource: [
+						'status',
+					],
 				},
 			},
+			options: [
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get Status',
+					value: 'getStatus',
+					action: 'Get status',
+					description: 'Get the current status of the organization\'s account, including available tokens and guides in progress',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '/status',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get Consumption',
+					value: 'getTokenConsumption',
+					action: 'Get consumption',
+					description: 'Get Token Consumption',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '/Consumption/openai',
+						},
+					},
+				},
+			],
+			default: 'getStatus',
 		},
+
+		// All operations for <Group>
 		{
-			// name of options 2
+			displayName: 'Operation',
+			name: 'operation',
+			// Display the operations in a dropdown
+			type: 'options',
+			noDataExpression: true,
+			displayOptions: {
+				show: {
+					// select the resource corresponding to the endpoint
+					resource: [
+						'group',
+					],
+				},
+			},
+			options: [
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Create',
+					value: 'createGroup',
+					action: 'Create group',
+					description: 'Create a new group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '/projects/{{$parameter.projectId}}/groups',
+						},
+					},
+				},
+								{
+					//Name of the operation in dropdown = label in Make
+					name: 'Delete Group',
+					value: 'deleteGroup',
+					action: 'Delete group',
+					description: 'Delete a whole group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'DELETE',
+							url: '/projects/projects/{projectId}/groups/{groupId} /guides/remove',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Delete Guide',
+					value: 'removeGuideinGroup',
+					action: 'Delete guide in group',
+					description: 'Delete a guide in a group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/guides/remove',
+						},
+					},
+				},
+
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get',
+					value: 'getProject',
+					action: 'Get project information',
+					description: 'Get a project\'s information',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get Many',
+					value: 'listProjects',
+					action: 'List all projects',
+					description: 'List all the organization\'s projects',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '/projects',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Update',
+					value: 'updateProject',
+					action: 'Update project',
+					description: 'Delete one project and all guides inside',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '/projects',
+						},
+					},
+				}
+			],
+			default: 'listProjects',
+		},
+
+
+
+		// parameter : projectId
+		{
 			displayName: 'Project ID',
 			description: 'ID of the project',
 			required: true,
@@ -317,11 +459,11 @@ export class YourtextGuru implements INodeType {
 				},
 			},
 		},
+		// parameter : projectId optional
 		{
-			// name of options 2
 			displayName: 'Project ID',
 			description: 'ID of the project',
-			name: 'projectIdOptionnal',
+			name: 'projectIdOptional',
 			type: 'string',
 			default:'',
 			displayOptions: {
@@ -331,6 +473,114 @@ export class YourtextGuru implements INodeType {
 					operation: ['createGuide','listGuides'],
 				},
 			},
+		},
+		// parameter : groupId
+		{
+			displayName: 'Group ID',
+			description: 'ID of the group',
+			required: true,
+			name: 'groupId',
+			type: 'string',
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['group']
+				},
+			},
+		},
+		// parameter : groupId optional
+		{
+			displayName: 'Group ID',
+			description: 'ID of the group',
+			name: 'groupIdOptional',
+			type: 'string',
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['createGuide','listGuides'],
+				},
+			},
+		},
+		// parameter : guideType
+		{
+			displayName: 'Type of Guide',
+			name: 'guideType',
+			type: 'options',
+			options :[
+				{name: 'Guide', value: ''},
+				{name: 'Guide Brief', value: 'brief'},
+				{name: 'Guide PAA', value: 'paa'},
+				{name: 'Guide Related Informations', value: 'related'},
+				{name: 'Guide Serp', value: 'serp'}
+			],
+			routing: {
+				request: {
+					url: '=/guides/{{$parameter.guideId}}/{{$value}}'
+				}
+			},
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['getGuide'],
+				},
+			},
+		},
+		// parameter : guideId
+		{
+			displayName: 'Guide ID',
+			description: 'ID of the guide',
+			required: true,
+			name: 'guideId',
+			type: 'string',
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['getGuide','getGuideBriefAnalysis']
+				},
+			},
+		},
+		// parameter : return all
+		{
+			displayName: 'Return All',
+			name: 'returnAll',
+			type: 'boolean',
+			description: 'Whether to return all results or only up to a given limit',
+			default: true,
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['getGuideBriefAnalysis'],
+				},
+			},
+		},
+		// parameter : analyzeId
+		{
+			displayName: 'Analyze ID',
+			required: true,
+			name: 'analyzeId',
+			type: 'string',
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['getGuideBriefAnalysis'],
+					returnAll: [false]
+				},
+			},
+			routing: {
+				request: {
+					url: '=/guides/{{$parameter.guideId}}/brief/analyze/{{$value}}'
+				}
+			}
 		},
 
 
