@@ -45,12 +45,6 @@ export class YourtextGuru implements INodeType {
 			// in the dropdown, we put name of the different options/resources
 			options: [
 				{
-					//name displayed in dropdown
-					name: 'Project',
-					//name for the system
-					value: 'project',
-				},
-				{
 					name: 'Group',
 					value: 'group',
 				},
@@ -59,6 +53,12 @@ export class YourtextGuru implements INodeType {
 					name: 'Guide',
 					//name for the system
 					value: 'guide',
+				},
+				{
+					//name displayed in dropdown
+					name: 'Project',
+					//name for the system
+					value: 'project',
 				},
 				{
 					//name displayed in dropdown
@@ -74,13 +74,12 @@ export class YourtextGuru implements INodeType {
 				}
 			],
 			//default option displayed
-			default: 'status',
+			default: 'project',
 		},
 
 
-		// Operations will go here, 1 operation = 1 endpoint with all params
+		// All operations for <Project>
 		{
-			// operation 1 for resource project
 			displayName: 'Operation',
 			name: 'operation',
 			// Display the operations in a dropdown
@@ -97,8 +96,50 @@ export class YourtextGuru implements INodeType {
 			options: [
 				{
 					//Name of the operation in dropdown = label in Make
-					name: 'Get All Projects',
-					value: 'get all projects',
+					name: 'Create',
+					value: 'createProject',
+					action: 'Create project',
+					description: 'Create a new project',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '/projects',
+						},
+					},
+				},
+					{
+					//Name of the operation in dropdown = label in Make
+					name: 'Delete',
+					value: 'deleteProject',
+					action: 'Delete project',
+					description: 'Delete one project and all guides inside',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'DELETE',
+							url: '/projects',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get',
+					value: 'getProject',
+					action: 'Get project information',
+					description: 'Get a project\'s information',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get Many',
+					value: 'listProjects',
 					action: 'List all projects',
 					description: 'List all the organization\'s projects',
 					routing: {
@@ -111,50 +152,128 @@ export class YourtextGuru implements INodeType {
 				},
 				{
 					//Name of the operation in dropdown = label in Make
-					name: 'Get a Project',
-					value: 'get a project',
-					action: 'Get project information',
-					description: 'Get a project\'s information',
+					name: 'Update',
+					value: 'updateProject',
+					action: 'Update project',
+					description: 'Delete one project and all guides inside',
 					routing: {
 						// set method and url for the endpoint
 						request: {
-							method: 'GET',
+							method: 'POST',
 							url: '/projects',
 						},
 					},
 				}
 			],
-			default: 'get all projects',
+			default: 'listProjects',
 		},
-		/*{
-			// operation 1 for resource marsRoverPhotos
+
+
+		// All Operations for <Guide>
+		{
 			displayName: 'Operation',
 			name: 'operation',
+			// Display the operations in a dropdown
 			type: 'options',
 			noDataExpression: true,
 			displayOptions: {
-				//only show in resource:
 				show: {
-					resource: ['project'],
+					// select the resource corresponding to the endpoint
+					resource: [
+						'guide',
+					],
 				},
 			},
 			options: [
 				{
 					//Name of the operation in dropdown = label in Make
+					name: 'Analyze Text',
+					value: 'analyzeText',
+					action: 'Analyze text',
+					description: 'Analyze a text to see if it meets the brief',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/brief/analyze',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Check',
+					value: 'check',
+					action: 'Check guide',
+					description: 'Analyze a given text against the semantic and SEO recommendations of a specific guide',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/check',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Create',
+					value: 'createGuide',
+					action: 'Create guide',
+					description: 'Create a new guide',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '/guides',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Delete',
+					value: 'deleteGuide',
+					action: 'Delete guide',
+					description: 'Delete a guide',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'DELETE',
+							url: '=/guides/{{$parameter.guideId}}',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
 					name: 'Get',
-					value: 'get',
-					action: 'Get Mars Rover photos',
-					description: 'Get photos from the Mars Rover',
+					value: 'getGuide',
+					action: 'Get guide',
+					description: 'Get a specific gide',
 					routing: {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
+							url: '/guides',
+						},
+					},
+				},
+				{
+					//Name of the operation in dropdown = label in Make
+					name: 'Get Many',
+					value: 'listGuides',
+					action: 'List all guides',
+					description: 'List all the organization\'s guide',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '/guides',
 						},
 					},
 				},
 			],
-			default: 'get',
-		},*/
+			default: 'listGuides',
+		},
+
+
 		{
 			// name of options 1
 			displayName: 'Rover name',
@@ -184,28 +303,38 @@ export class YourtextGuru implements INodeType {
 		},
 		{
 			// name of options 2
-			displayName: 'Date',
-			description: 'Earth date',
+			displayName: 'Project ID',
+			description: 'ID of the project',
 			required: true,
-			name: 'marsRoverDate',
-			type: 'dateTime',
+			name: 'projectId',
+			type: 'string',
 			default:'',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['project'],
-					operation: ['get a project'],
-				},
-			},
-			routing: {
-				request: {
-					// You've already set up the URL. qs appends the value of the field as a query string
-					qs: {
-						earth_date: '={{ new Date($value).toISOString().substr(0,10) }}',
-					},
+					resource: ['project','group'],
+					operation: ['getProject','deleteProject','updateProject','createGroups'],
 				},
 			},
 		},
+		{
+			// name of options 2
+			displayName: 'Project ID',
+			description: 'ID of the project',
+			name: 'projectIdOptionnal',
+			type: 'string',
+			default:'',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['createGuide','listGuides'],
+				},
+			},
+		},
+
+
+
 		// Optional/additional fields will go here, always in type collection
 		{
 			displayName: 'Additional Fields',
