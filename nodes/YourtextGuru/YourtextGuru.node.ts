@@ -94,8 +94,8 @@ export class YourtextGuru implements INodeType {
 				},
 			},
 			options: [
+				// Operation : createProject
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Create',
 					value: 'createProject',
 					action: 'Create project',
@@ -105,11 +105,15 @@ export class YourtextGuru implements INodeType {
 						request: {
 							method: 'POST',
 							url: '/projects',
+							body: {
+								host: '{{$parameter.host}}',
+								name: '{{$parameter.name}}',
+							}
 						},
 					},
 				},
-					{
-					//Name of the operation in dropdown = label in Make
+				// Operation : deleteProject
+				{
 					name: 'Delete',
 					value: 'deleteProject',
 					action: 'Delete project',
@@ -118,12 +122,12 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'DELETE',
-							url: '/projects',
+							url: '=/projects/{{$parameter.projectId}}',
 						},
 					},
 				},
+				// Operation : getProject
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get',
 					value: 'getProject',
 					action: 'Get project information',
@@ -136,8 +140,8 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : listProjects
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get Many',
 					value: 'listProjects',
 					action: 'List all projects',
@@ -151,7 +155,7 @@ export class YourtextGuru implements INodeType {
 					},
 				},
 				{
-					//Name of the operation in dropdown = label in Make
+					// Operation : updateProject
 					name: 'Update',
 					value: 'updateProject',
 					action: 'Update project',
@@ -160,14 +164,17 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'POST',
-							url: '/projects',
+							url: '=/projects/{{$parameter.projectId}}',
+							body: {
+								host: '{{$parameter.host}}',
+								name: '{{$parameter.name}}',
+							}
 						},
 					},
 				}
 			],
 			default: 'listProjects',
 		},
-
 
 		// All Operations for <Guide>
 		{
@@ -215,7 +222,7 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '=/guides/{{$parameter.guideId}}/check',
 							body: {
-								text: '={{$parameter.text}}'
+								text: '{{$parameter.text}}'
 							}
 						},
 					},
@@ -232,11 +239,11 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '/guides',
 							qs: {
-								query: '={{$parameter.query}}',
-								lang: '={{$parameter.lang}}',
-								projectId: '={{$parameter.projectIdOptional}}',
-								type: '={{$parameter.guideType}}',
-								groupId: '={{$parameter.groupIdOptional}}',
+								query: '{{$parameter.query}}',
+								lang: '{{$parameter.lang}}',
+								projectId: '{{$parameter.projectIdOptional}}',
+								type: '{{$parameter.guideType}}',
+								groupId: '{{$parameter.groupIdOptional}}',
 							}
 						},
 					},
@@ -295,12 +302,12 @@ export class YourtextGuru implements INodeType {
 							method: 'GET',
 							url: '/guides',
 							qs: {
-								apiOnly: '={{$parameter.apiOnly}}',
-								groupId: '={{$parameter.groupIdOptional}}',
-								lang: '={{$parameter.langOptionnal}}',
-								lastId: '={{$parameter.lastId}}',
-								projectId: '={{$parameter.projectIdOptional}}',
-								status: '={{$parameter.status}}',
+								apiOnly: '{{$parameter.apiOnly}}',
+								groupId: '{{$parameter.groupIdOptional}}',
+								lang: '{{$parameter.langOptionnal}}',
+								lastId: '{{$parameter.lastId}}',
+								projectId: '{{$parameter.projectIdOptional}}',
+								status: '{{$parameter.status}}',
 							}
 						},
 					},
@@ -339,8 +346,8 @@ export class YourtextGuru implements INodeType {
 				},
 			},
 			options: [
+				// Operation : getStatus
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get Status',
 					value: 'getStatus',
 					action: 'Get status',
@@ -353,8 +360,8 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : getTokenConsumption
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Get Consumption',
 					value: 'getTokenConsumption',
 					action: 'Get consumption',
@@ -363,7 +370,7 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '/Consumption/openai',
+							url: '/consumption/openai',
 						},
 					},
 				},
@@ -476,7 +483,55 @@ export class YourtextGuru implements INodeType {
 			default: 'listProjects',
 		},
 
+		// All Operations for <Seo txl>
+		{
+			displayName: 'Operation',
+			name: 'operation',
+			// Display the operations in a dropdown
+			type: 'options',
+			noDataExpression: true,
+			displayOptions: {
+				show: {
+					// select the resource corresponding to the endpoint
+					resource: [
+						'seotxl',
+					],
+				},
+			},
+			options: [
+				// Operation : generateOutlineTextBasedonGuideWords
+				{
+					name: 'Generate Outline Text Based on Guide Words',
+					value: 'generateOutlineTextBasedonGuideWords',
+					action: 'Generate outline text based on guide words',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/seotxl/outline',
+							body: {
+								text: '{{$parameter.text}}'
+							}
+						},
+					},
+				},
+				// Operation : generateQuestionsBasedonGuideWords
+				{
+					name: 'Generate Questions Based on Guide Words',
+					value: 'generateQuestionsBasedonGuideWords',
+					action: 'Generate questions based on guide words',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/seotxl/questions',
+						},
+					},
+				},
 
+			],
+			default: 'generateOutlineTextBasedonGuideWords',
+		},
 
 		// parameter : projectId
 		{
@@ -749,7 +804,7 @@ export class YourtextGuru implements INodeType {
 				show: {
 					//only show if you've selected :
 					resource: ['guide'],
-					operation: ['listGuides']
+					operation: ['listGuides','getTokenConsumption']
 				},
 			},
 		},
@@ -823,6 +878,38 @@ export class YourtextGuru implements INodeType {
 					//only show if you've selected :
 					resource: ['guide'],
 					operation: ['createGuide']
+				},
+			},
+		},
+		// parameter : host
+		{
+			displayName: 'Host',
+			description: 'URL of your website ex: www.org.com',
+			name: 'host',
+			required: true,
+			type: 'string',
+			default: '',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['project'],
+					operation: ['createProject','updateProject']
+				},
+			},
+		},
+		// parameter : name
+		{
+			displayName: 'Name',
+			description: 'Name of your project',
+			name: 'name',
+			required: true,
+			type: 'string',
+			default: '',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['project'],
+					operation: ['createProject','updateProject']
 				},
 			},
 		},
