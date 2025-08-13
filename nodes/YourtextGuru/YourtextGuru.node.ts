@@ -104,10 +104,10 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'POST',
-							url: '/projects',
+							url: '=/projects',
 							body: {
-								host: '{{$parameter.host}}',
-								name: '{{$parameter.name}}',
+								host: '={{$parameter.host}}',
+								name: '={{$parameter.nameProject}}',
 							}
 						},
 					},
@@ -166,8 +166,8 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '=/projects/{{$parameter.projectId}}',
 							body: {
-								host: '{{$parameter.host}}',
-								name: '{{$parameter.name}}',
+								host: '={{$parameter.host}}',
+								name: '={{$parameter.nameProject}}',
 							}
 						},
 					},
@@ -205,7 +205,7 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '=/guides/{{$parameter.guideId}}/brief/analyze',
 							body: {
-								text: '{{$parameter.text}}'
+								text: '={{$parameter.text}}'
 							},
 						},
 					},
@@ -222,7 +222,7 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '=/guides/{{$parameter.guideId}}/check',
 							body: {
-								text: '{{$parameter.text}}'
+								text: '={{$parameter.text}}'
 							}
 						},
 					},
@@ -237,13 +237,13 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'POST',
-							url: '/guides',
+							url: '=/guides',
 							qs: {
-								query: '{{$parameter.query}}',
-								lang: '{{$parameter.lang}}',
-								projectId: '{{$parameter.projectIdOptional}}',
-								type: '{{$parameter.guideType}}',
-								groupId: '{{$parameter.groupIdOptional}}',
+								query: '={{$parameter.query}}',
+								lang: '={{$parameter.lang}}',
+								projectId: '={{$parameter.projectIdOptional}}',
+								type: '={{$parameter.guideType}}',
+								groupId: '={{$parameter.groupIdOptional}}',
 							}
 						},
 					},
@@ -300,14 +300,14 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '/guides',
+							url: '=/guides',
 							qs: {
-								apiOnly: '{{$parameter.apiOnly}}',
-								groupId: '{{$parameter.groupIdOptional}}',
-								lang: '{{$parameter.langOptionnal}}',
-								lastId: '{{$parameter.lastId}}',
-								projectId: '{{$parameter.projectIdOptional}}',
-								status: '{{$parameter.status}}',
+								apiOnly: '={{$parameter.apiOnly}}',
+								groupId: '={{$parameter.groupIdOptional}}',
+								lang: '={{$parameter.langOptionnal}}',
+								lastId: '={{$parameter.lastId}}',
+								projectId: '={{$parameter.projectIdOptional}}',
+								status: '={{$parameter.status}}',
 							}
 						},
 					},
@@ -356,7 +356,7 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '/status',
+							url: '=/status',
 						},
 					},
 				},
@@ -370,7 +370,7 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '/consumption/openai',
+							url: '=/consumption/openai',
 						},
 					},
 				},
@@ -393,9 +393,27 @@ export class YourtextGuru implements INodeType {
 					],
 				},
 			},
+			// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 			options: [
+				// Operation : addListinGroup
 				{
-					//Name of the operation in dropdown = label in Make
+					name: 'Add List in Group',
+					value: 'addListinGroup',
+					action: 'Add list of guide in group',
+					description: 'Add a list of guide in a group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/guides/add',
+							body: {
+								guideId: '={{$parameter.guideIdCollection}}'
+							}
+						},
+					},
+				},
+				// Operation : createGroup
+				{
 					name: 'Create',
 					value: 'createGroup',
 					action: 'Create group',
@@ -404,12 +422,116 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'POST',
-							url: '/projects/{{$parameter.projectId}}/groups',
+							url: '=/projects/{{$parameter.projectId}}/groups',
+							body: {
+								name: '={{$parameter.nameGroup}}'
+							}
 						},
 					},
 				},
-								{
-					//Name of the operation in dropdown = label in Make
+				// Operation : createTopicalMesh
+				{
+					name: 'Create Topical Mesh',
+					value: 'createTopicalMesh',
+					action: 'Create a topical mesh',
+					description: 'Create a thematic mesh from all the guides in the group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/topicalMesh',
+						},
+					},
+				},
+				// Operation : getAllGroupsinProject
+				{
+					name: 'List All Groups in a Project',
+					value: 'getAllGroupsinProject',
+					action: 'List all groups in a project',
+					description: 'Get all groups in a project',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}/groups',
+						},
+					},
+				},
+				// Operation : getGroupInfo
+				{
+					name: 'Get Group Info',
+					value: 'getGroupInfo',
+					action: 'Get group info',
+					description: 'Get info of a group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}',
+						},
+					},
+				},
+				// Operation : getTopicalMesh
+				{
+					name: 'Get Topical Mesh',
+					value: 'getTopicalMesh',
+					action: 'Get topical mesh',
+					description: 'Get a group topical mesh',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/topicalMesh',
+						},
+					},
+				},
+				// Operation : getTopicalMeshPaa
+				{
+					name: 'Get Topical Mesh Paa',
+					value: 'getTopicalMeshPaa',
+					action: 'Get topical mesh paa',
+					description: 'Get a topical mesh paa',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/topicalMesh/paa',
+						},
+					},
+				},
+				// Operation : getTopicalMeshWordcloud
+				{
+					name: 'Get Topical Mesh Wordcloud',
+					value: 'getTopicalMeshWordcloud',
+					action: 'Get topical mesh wordcloud',
+					description: 'Get a topical mesh wordcloud',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'GET',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/topicalMesh/wordcloud',
+						},
+					},
+				},
+				// Operation : updateGroup
+				{
+					name: 'Update',
+					value: 'updateGroup',
+					action: 'Update group',
+					description: 'Update a group',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}',
+							body: {
+								name: '={{$parameter.nameGroup}}'
+							}
+						},
+					},
+				},
+				// Operation : deleteGroup
+				{
 					name: 'Delete Group',
 					value: 'deleteGroup',
 					action: 'Delete group',
@@ -418,69 +540,29 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'DELETE',
-							url: '/projects/projects/{projectId}/groups/{groupId} /guides/remove',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}',
 						},
 					},
 				},
+				// Operation : removeGuideinGroup
 				{
-					//Name of the operation in dropdown = label in Make
 					name: 'Delete Guide',
 					value: 'removeGuideinGroup',
-					action: 'Delete guide in group',
-					description: 'Delete a guide in a group',
+					action: 'Delete guide from group',
+					description: 'Remove a list of guide from group',
 					routing: {
 						// set method and url for the endpoint
 						request: {
 							method: 'POST',
-							url: '/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/guides/remove',
+							url: '=/projects/{{$parameter.projectId}}/groups/{{$parameter.groupId}}/guides/remove',
+							body: {
+								guideId: '={{$parameter.guideIdCollection}}'
+							}
 						},
 					},
 				},
-
-				{
-					//Name of the operation in dropdown = label in Make
-					name: 'Get',
-					value: 'getProject',
-					action: 'Get project information',
-					description: 'Get a project\'s information',
-					routing: {
-						// set method and url for the endpoint
-						request: {
-							method: 'GET',
-							url: '=/projects/{{$parameter.projectId}}',
-						},
-					},
-				},
-				{
-					//Name of the operation in dropdown = label in Make
-					name: 'Get Many',
-					value: 'listProjects',
-					action: 'List all projects',
-					description: 'List all the organization\'s projects',
-					routing: {
-						// set method and url for the endpoint
-						request: {
-							method: 'GET',
-							url: '/projects',
-						},
-					},
-				},
-				{
-					//Name of the operation in dropdown = label in Make
-					name: 'Update',
-					value: 'updateProject',
-					action: 'Update project',
-					description: 'Delete one project and all guides inside',
-					routing: {
-						// set method and url for the endpoint
-						request: {
-							method: 'POST',
-							url: '/projects',
-						},
-					},
-				}
 			],
-			default: 'listProjects',
+			default: 'getAllGroupsinProject',
 		},
 
 		// All Operations for <Seo txl>
@@ -510,7 +592,7 @@ export class YourtextGuru implements INodeType {
 							method: 'POST',
 							url: '=/guides/{{$parameter.guideId}}/seotxl/outline',
 							body: {
-								text: '{{$parameter.text}}'
+								text: '={{$parameter.text}}'
 							}
 						},
 					},
@@ -528,6 +610,56 @@ export class YourtextGuru implements INodeType {
 						},
 					},
 				},
+				// Operation : generateTextBasedonGuideWords
+				{
+					name: 'Generate Text Based on Guide Words',
+					value: 'generateTextBasedonGuideWords',
+					action: 'Generate text based on guide words',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/seotxl/auto',
+							body: {
+								text: '={{$parameter.text}}'
+							},
+						},
+					},
+				},
+				// Operation : generateTextfromGuide
+				{
+					name: 'Generate Text From a Guide',
+					value: 'generateTextfromGuide',
+					action: 'Generate text from a guide',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/seotxl/create',
+							body: {
+								text: '={{$parameter.text}}',
+								maxWords: '={{$parameter.maxWords}}',
+								temperature: '={{$parameter.temperature}}'
+							},
+						},
+					},
+				},
+				// Operation : rephraseTextBasedonGuideWords
+				{
+					name: 'Rephrase Text Based on Guide Words',
+					value: 'rephraseTextBasedonGuideWords',
+					action: 'Rephrase text based on guide words',
+					routing: {
+						// set method and url for the endpoint
+						request: {
+							method: 'POST',
+							url: '=/guides/{{$parameter.guideId}}/seotxl/rephrase',
+							body: {
+								text: '={{$parameter.text}}'
+							},
+						},
+					},
+				},
 
 			],
 			default: 'generateOutlineTextBasedonGuideWords',
@@ -540,12 +672,27 @@ export class YourtextGuru implements INodeType {
 			required: true,
 			name: 'projectId',
 			type: 'string',
-			default:'',
+			default: '',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['project','group'],
-					operation: ['getProject','deleteProject','updateProject','createGroups'],
+					resource: ['project'],
+					operation: ['getProject','deleteProject','updateProject','createGroups','addListinGroup'],
+				},
+			},
+		},
+		// parameter : projectId
+		{
+			displayName: 'Project ID',
+			description: 'ID of the project',
+			required: true,
+			name: 'projectId',
+			type: 'string',
+			default: '',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['group'],
 				},
 			},
 		},
@@ -555,7 +702,7 @@ export class YourtextGuru implements INodeType {
 			description: 'ID of the project',
 			name: 'projectIdOptional',
 			type: 'string',
-			default:'',
+			default: '',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
@@ -571,11 +718,12 @@ export class YourtextGuru implements INodeType {
 			required: true,
 			name: 'groupId',
 			type: 'string',
-			default:'',
+			default: '',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['group']
+					resource: ['group'],
+					operation: ['addListinGroup','deleteGroup','getGroupInfo','getTopicalMesh','getTopicalMeshPaa','getTopicalMeshWordcloud','removeGuideinGroup','updateGroup','createTopicalMesh']
 				},
 			},
 		},
@@ -585,7 +733,7 @@ export class YourtextGuru implements INodeType {
 			description: 'ID of the group',
 			name: 'groupIdOptional',
 			type: 'string',
-			default:'',
+			default: '',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
@@ -624,14 +772,14 @@ export class YourtextGuru implements INodeType {
 		{
 			displayName: 'Guide ID',
 			description: 'ID of the guide',
-			required: true,
 			name: 'guideId',
 			type: 'string',
-			default:'',
+			default: '',
+			required: true,
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['guide'],
+					resource: ['guide','seotxl','group'],
 					operation: ['getGuide','getGuideBriefAnalysis','check','analyzeText','createBrief','deleteGuide']
 				},
 			},
@@ -657,7 +805,7 @@ export class YourtextGuru implements INodeType {
 			required: true,
 			name: 'analyzeId',
 			type: 'string',
-			default:'',
+			default: '',
 			displayOptions: {
 				show: {
 					//only show if you've selected :
@@ -837,11 +985,13 @@ export class YourtextGuru implements INodeType {
 			name: 'text',
 			type: 'string',
 			default: '',
+			required: true,
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['check','analyzeText']
+					resource: ['guide','seotxl'],
+					operation: ['check','analyzeText',
+						'generateOutlineTextBasedonGuideWords','generateTextBasedonGuideWords','generateTextfromGuide','rephraseTextBasedonGuideWords']
 				},
 			},
 		},
@@ -897,11 +1047,11 @@ export class YourtextGuru implements INodeType {
 				},
 			},
 		},
-		// parameter : name
+		// parameter : nameProject
 		{
 			displayName: 'Name',
 			description: 'Name of your project',
-			name: 'name',
+			name: 'nameProject',
 			required: true,
 			type: 'string',
 			default: '',
@@ -910,6 +1060,73 @@ export class YourtextGuru implements INodeType {
 					//only show if you've selected :
 					resource: ['project'],
 					operation: ['createProject','updateProject']
+				},
+			},
+		},
+		// parameter : nameGroup
+		{
+			displayName: 'Name',
+			description: 'Name of your group',
+			name: 'nameGroup',
+			required: true,
+			type: 'string',
+			default: '',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['group'],
+					operation: ['createGroup','updateGroup']
+				},
+			},
+		},
+		// parameter : maxWords
+		{
+			displayName: 'Maximum Words',
+			description: 'Set maximum number of words',
+			name: 'maxWords',
+			required: true,
+			type: 'number',
+			default: 500,
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['seotxl'],
+					operation: ['generateTextfromGuide']
+				},
+			},
+		},
+		// parameter : temperature
+		{
+			displayName: 'Temperature',
+			description: 'Set the temperature for the model',
+			name: 'temperature',
+			required: true,
+			type: 'number',
+			default: 1,
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['seotxl'],
+					operation: ['generateTextfromGuide']
+				},
+			},
+		},
+		// parameter : guideIdCollection
+		{
+			displayName: 'Guide IDs',
+			description: 'List of guide ID to add to a group',
+			name: 'guideIdCollection',
+			required: true,
+			type: 'string',
+			default: [],
+			typeOptions: {
+				multipleValues: true
+			},
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['group'],
+					operation: ['addListinGroup','removeGuideinGroup']
 				},
 			},
 		},
