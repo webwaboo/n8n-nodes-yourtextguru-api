@@ -241,9 +241,9 @@ export class YourtextGuru implements INodeType {
 							qs: {
 								query: '={{$parameter.query}}',
 								lang: '={{$parameter.lang}}',
-								projectId: '={{$parameter.projectIdOptional}}',
-								type: '={{$parameter.guideType}}',
-								groupId: '={{$parameter.groupIdOptional}}',
+								projectId: '={{$parameter.additionalFields.projectIdOptional}}',
+								type: '={{$parameter.additionalFields.guideType}}',
+								groupId: '={{$parameter.additionalFields.groupIdOptional}}',
 							}
 						},
 					},
@@ -302,12 +302,12 @@ export class YourtextGuru implements INodeType {
 							method: 'GET',
 							url: '=/guides',
 							qs: {
-								apiOnly: '={{$parameter.apiOnly}}',
-								groupId: '={{$parameter.groupIdOptional}}',
-								lang: '={{$parameter.langOptionnal}}',
+								apiOnly: '={{$parameter.additionalFields.apiOnly}}',
+								groupId: '={{$parameter.additionalFields.groupIdOptional}}',
+								lang: '={{$parameter.additionalFields.langOptionnal}}',
 								lastId: '={{$parameter.lastId}}',
 								projectId: '={{$parameter.projectIdOptional}}',
-								status: '={{$parameter.status}}',
+								status: '={{$parameter.additionalFields.status}}',
 							}
 						},
 					},
@@ -707,7 +707,7 @@ export class YourtextGuru implements INodeType {
 				show: {
 					//only show if you've selected :
 					resource: ['guide'],
-					operation: ['createGuide','listGuides'],
+					operation: ['listGuides'],
 				},
 			},
 		},
@@ -724,21 +724,6 @@ export class YourtextGuru implements INodeType {
 					//only show if you've selected :
 					resource: ['group'],
 					operation: ['addListinGroup','deleteGroup','getGroupInfo','getTopicalMesh','getTopicalMeshPaa','getTopicalMeshWordcloud','removeGuideinGroup','updateGroup','createTopicalMesh']
-				},
-			},
-		},
-		// parameter : groupId optional
-		{
-			displayName: 'Group ID',
-			description: 'ID of the group',
-			name: 'groupIdOptional',
-			type: 'string',
-			default: '',
-			displayOptions: {
-				show: {
-					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['createGuide','listGuides','createGuide'],
 				},
 			},
 		},
@@ -820,25 +805,6 @@ export class YourtextGuru implements INodeType {
 				}
 			}
 		},
-		// parameter : apiOnly
-		{
-			displayName: 'API Only',
-			description: 'Get only guide created by API (default: get all)',
-			name: 'apiOnly',
-			type: 'options',
-			options: [
-				{ name: 'Yes', value: 1 },
-				{ name: 'No', value: 0 }
-			],
-			default: 0,
-			displayOptions: {
-				show: {
-					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['listGuides']
-				},
-			},
-		},
 		// parameter : lang
 		{
 			displayName: 'Language',
@@ -890,57 +856,6 @@ export class YourtextGuru implements INodeType {
 				},
 			},
 		},
-		// parameter : langOptionnal
-		{
-			displayName: 'Language',
-			description: 'Language (default: get all)',
-			default: '',
-			name: 'langOptionnal',
-			type: 'options',
-			options: [
-				{ name: "All", value: ""},
-        { name: "Dutch (Netherlands)", value: "nl_NL" },
-        { name: "English (Australia)", value: "en_AU" },
-        { name: "English (Canada)", value: "en_CA" },
-        { name: "English (Egypt)", value: "en_EG" },
-        { name: "English (India)", value: "en_IN" },
-        { name: "English (South Africa)", value: "en_ZA" },
-        { name: "English (United Arab Emirates)", value: "en_AE" },
-        { name: "English (United Kingdom)", value: "en_GB" },
-        { name: "English (United States)", value: "en_US" },
-        { name: "French (Andorra)", value: "fr_AD" },
-        { name: "French (Belgium)", value: "fr_BE" },
-        { name: "French (Canada)", value: "fr_CA" },
-        { name: "French (France)", value: "fr_FR" },
-        { name: "French (Luxembourg)", value: "fr_LU" },
-        { name: "French (Morocco)", value: "fr_MA" },
-        { name: "French (Switzerland)", value: "fr_CH" },
-				{ name: "German (Austria)", value: "de_AT" },
-        { name: "German (Belgium)", value: "de_BE" },
-        { name: "German (Germany)", value: "de_DE" },
-        { name: "German (Switzerland)", value: "de_CH" },
-        { name: "Italian (Italy)", value: "it_IT" },
-        { name: "Italian (Switzerland)", value: "it_CH" },
-        { name: "Polish (Poland)", value: "pl_PL" },
-        { name: "Portuguese (Brazil)", value: "pt_BR" },
-        { name: "Portuguese (Portugal)", value: "pt_PT" },
-        { name: "Romanian (Romania)", value: "ro_RO" },
-				{ name: "Spanish (Argentina)", value: "es_AR" },
-        { name: "Spanish (Chile)", value: "es_CL" },
-        { name: "Spanish (Colombia)", value: "es_CO" },
-        { name: "Spanish (Mexico)", value: "es_MX" },
-        { name: "Spanish (Peru)", value: "es_PE" },
-        { name: "Spanish (Spain)", value: "es_ES" },
-        { name: "Spanish (United States)", value: "es_US" },
-      ],
-			displayOptions: {
-				show: {
-					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['listGuides']
-				},
-			},
-		},
 		// parameter : lastId
 		{
 			displayName: 'Last ID',
@@ -953,28 +868,6 @@ export class YourtextGuru implements INodeType {
 					//only show if you've selected :
 					resource: ['guide'],
 					operation: ['listGuides','getTokenConsumption']
-				},
-			},
-		},
-		// parameter : status
-		{
-			displayName: 'Status',
-			description: 'Get guide with a specific status',
-			name: 'status',
-			type: 'options',
-			options: [
-				{ name: "All", value: "" },
-        { name: "Error", value: "error" },
-        { name: "In Progress", value: "in_progress" },
-        { name: "Ready", value: "ready" },
-        { name: "Waiting", value: "waiting" },
-      ],
-			default: "",
-			displayOptions: {
-				show: {
-					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['listGuides']
 				},
 			},
 		},
@@ -992,26 +885,6 @@ export class YourtextGuru implements INodeType {
 					resource: ['guide','seotxl'],
 					operation: ['check','analyzeText',
 						'generateOutlineTextBasedonGuideWords','generateTextBasedonGuideWords','generateTextfromGuide','rephraseTextBasedonGuideWords']
-				},
-			},
-		},
-		// parameter : guideType
-		{
-			displayName: 'Type of Guide',
-			name: 'guideType',
-			type: 'options',
-			description: "Guide type (google by default)",
-			options :[
-				{name: 'Google', value: 'google'},
-				{name: 'Bing', value: 'bing'},
-
-			],
-			default:'google',
-			displayOptions: {
-				show: {
-					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['createGuide'],
 				},
 			},
 		},
@@ -1132,7 +1005,7 @@ export class YourtextGuru implements INodeType {
 		},
 
 
-		// Optional/additional fields will go here, always in type collection
+		// additional fields listGuides
 		{
 			displayName: 'Additional Fields',
 			name: 'additionalFields',
@@ -1143,26 +1016,137 @@ export class YourtextGuru implements INodeType {
 				show: {
 					//only show if you've selected :
 					resource: ['guide'],
-					operation: ['get'],
+					operation: ['listGuides'],
 				},
 			},
 			options: [
+				// parameter : langOptionnal
 				{
-					displayName: 'Date',
-					name: 'apodDate',
-					type: 'dateTime',
+					displayName: 'Language',
+					description: 'Language (default: get all)',
 					default: '',
-					routing: {
-						request: {
-							// You've already set up the URL. qs appends the value of the field as a query string
-							qs: {
-								date: '={{ new Date($value).toISOString().substr(0,10) }}',
-							},
-						},
-					},
+					name: 'langOptionnal',
+					type: 'options',
+					options: [
+						{ name: "All", value: ""},
+						{ name: "Dutch (Netherlands)", value: "nl_NL" },
+						{ name: "English (Australia)", value: "en_AU" },
+						{ name: "English (Canada)", value: "en_CA" },
+						{ name: "English (Egypt)", value: "en_EG" },
+						{ name: "English (India)", value: "en_IN" },
+						{ name: "English (South Africa)", value: "en_ZA" },
+						{ name: "English (United Arab Emirates)", value: "en_AE" },
+						{ name: "English (United Kingdom)", value: "en_GB" },
+						{ name: "English (United States)", value: "en_US" },
+						{ name: "French (Andorra)", value: "fr_AD" },
+						{ name: "French (Belgium)", value: "fr_BE" },
+						{ name: "French (Canada)", value: "fr_CA" },
+						{ name: "French (France)", value: "fr_FR" },
+						{ name: "French (Luxembourg)", value: "fr_LU" },
+						{ name: "French (Morocco)", value: "fr_MA" },
+						{ name: "French (Switzerland)", value: "fr_CH" },
+						{ name: "German (Austria)", value: "de_AT" },
+						{ name: "German (Belgium)", value: "de_BE" },
+						{ name: "German (Germany)", value: "de_DE" },
+						{ name: "German (Switzerland)", value: "de_CH" },
+						{ name: "Italian (Italy)", value: "it_IT" },
+						{ name: "Italian (Switzerland)", value: "it_CH" },
+						{ name: "Polish (Poland)", value: "pl_PL" },
+						{ name: "Portuguese (Brazil)", value: "pt_BR" },
+						{ name: "Portuguese (Portugal)", value: "pt_PT" },
+						{ name: "Romanian (Romania)", value: "ro_RO" },
+						{ name: "Spanish (Argentina)", value: "es_AR" },
+						{ name: "Spanish (Chile)", value: "es_CL" },
+						{ name: "Spanish (Colombia)", value: "es_CO" },
+						{ name: "Spanish (Mexico)", value: "es_MX" },
+						{ name: "Spanish (Peru)", value: "es_PE" },
+						{ name: "Spanish (Spain)", value: "es_ES" },
+						{ name: "Spanish (United States)", value: "es_US" },
+					],
+				},
+				// parameter : apiOnly
+				{
+					displayName: 'API Only',
+					description: 'Get only guide created by API (default: get all)',
+					name: 'apiOnly',
+					type: 'options',
+					options: [
+						{ name: 'Yes', value: 1 },
+						{ name: 'No', value: 0 }
+					],
+					default: 0,
+				},
+				// parameter : groupIdoptional
+				{
+					displayName: 'Group ID',
+					description: 'ID of the group',
+					name: 'groupIdOptional',
+					type: 'string',
+					default: '',
+				},
+				// parameter : status
+				{
+					displayName: 'Status',
+					description: 'Get guide with a specific status',
+					name: 'status',
+					type: 'options',
+					options: [
+						{ name: "All", value: "" },
+						{ name: "Error", value: "error" },
+						{ name: "In Progress", value: "in_progress" },
+						{ name: "Ready", value: "ready" },
+						{ name: "Waiting", value: "waiting" },
+					],
+					default: "",
 				},
 			],
-		}
+		},
+		// additional fields createGuide
+		{
+			displayName: 'Additional Fields',
+			name: 'additionalFields',
+			type: 'collection',
+			default: {},
+			placeholder: 'Add Field',
+			displayOptions: {
+				show: {
+					//only show if you've selected :
+					resource: ['guide'],
+					operation: ['createGuide'],
+				},
+			},
+			options: [
+				// parameter : projectId optional
+				{
+					displayName: 'Project ID',
+					description: 'ID of the project',
+					name: 'projectIdOptional',
+					type: 'string',
+					default: '',
+				},
+				// parameter : guideType
+				{
+					displayName: 'Type of Guide',
+					name: 'guideType',
+					type: 'options',
+					description: "Guide type (google by default)",
+					options :[
+						{name: 'Google', value: 'google'},
+						{name: 'Bing', value: 'bing'},
+					],
+					default:'google',
+				},
+				// parameter : groupIdoptional
+				{
+					displayName: 'Group ID',
+					description: 'ID of the group',
+					name: 'groupIdOptional',
+					type: 'string',
+					default: '',
+				},
+			],
+		},
+
 		]
 	};
 }
