@@ -10,7 +10,7 @@ export class YourtextGuru implements INodeType {
 		icon: 'file:YTGlogo.svg',
 		group: ['transform'],
 		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
 		//description of the node
 		description: 'Yourtext.Guru is an advanced SEO content optimization tool designed to help writers and marketers create high-performing content.',
 		//default name, just a the same as in displayName
@@ -22,7 +22,7 @@ export class YourtextGuru implements INodeType {
 		//name your credentials "MyNodeNameApi"
 		credentials: [
 			{
-				name: 'YourtextGuruApi',
+				name: 'yourtextGuruApi',
 				required: true,
 			},
 		],
