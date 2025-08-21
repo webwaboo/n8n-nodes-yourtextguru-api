@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-yourtextguru",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Yourtext.Guru is an advanced SEO content optimization tool designed to help writers and marketers create high-performing content.",
   "keywords": [
     "n8n-community-node-package"
