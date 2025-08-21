@@ -322,7 +322,7 @@ export class YourtextGuru implements INodeType {
 						// set method and url for the endpoint
 						request: {
 							method: 'GET',
-							url: '=/guides/{{$parameter.guideId}}/brief/analyze',
+							url: '=/guides/{{$parameter.guideId}}/brief/analyze/{{$parameter.analyzeId}}',
 						},
 					},
 				},
@@ -739,11 +739,6 @@ export class YourtextGuru implements INodeType {
 				{name: 'Guide Related Informations', value: 'related'},
 				{name: 'Guide Serp', value: 'serp'}
 			],
-			/*routing: {
-				request: {
-					url: '=/guides/{{$parameter.guideId}}/{{$value}}'
-				}
-			},*/
 			default:'',
 			displayOptions: {
 				show: {
@@ -764,23 +759,23 @@ export class YourtextGuru implements INodeType {
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['guide','seotxl','group'],
+					resource: ['guide'],
 					operation: ['getGuide','getGuideBriefAnalysis','check','analyzeText','createBrief','deleteGuide']
 				},
 			},
 		},
-		// parameter : return all
+		// parameter : guideId
 		{
-			displayName: 'Return All',
-			name: 'returnAll',
-			type: 'boolean',
-			description: 'Whether to return all results or only up to a given limit',
-			default: true,
+			displayName: 'Guide ID',
+			description: 'ID of the guide',
+			name: 'guideId',
+			type: 'string',
+			default: '',
+			required: true,
 			displayOptions: {
 				show: {
 					//only show if you've selected :
-					resource: ['guide'],
-					operation: ['getGuideBriefAnalysis'],
+					resource: ['seotxl']
 				},
 			},
 		},
@@ -796,14 +791,8 @@ export class YourtextGuru implements INodeType {
 					//only show if you've selected :
 					resource: ['guide'],
 					operation: ['getGuideBriefAnalysis'],
-					returnAll: [false]
 				},
 			},
-			routing: {
-				request: {
-					url: '=/guides/{{$parameter.guideId}}/brief/analyze/{{$value}}'
-				}
-			}
 		},
 		// parameter : lang
 		{
